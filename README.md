@@ -24,24 +24,22 @@ Go CRUD adalah aplikasi sederhana berbasis web untuk manajemen data mahasiswa me
 ## 📂 Struktur Proyek
 ```
 |-- main.go
-|-- config
+|-- go.mod
+|-- go.sum
+|-- controller
+|   |-- create_student.go
+|   |-- delete_student.go
+|   |-- hello_world.go
+|   |-- index_student.go
+|   |-- update_student.go
+|-- database
 |   |-- database.go
-|-- controllers
-|   |-- studentController.go
-|-- models
-|   |-- student.go
 |-- routes
 |   |-- routes.go
 |-- views
-|   |-- index.html
 |   |-- create.html
+|   |-- index.html
 |   |-- update.html
-|-- public
-|   |-- css
-|   |-- js
-|-- go.mod
-|-- go.sum
-|-- README.md
 ```
 
 ---
@@ -49,8 +47,8 @@ Go CRUD adalah aplikasi sederhana berbasis web untuk manajemen data mahasiswa me
 ## 📌 Instalasi & Menjalankan Aplikasi
 ### 1️⃣ **Clone Repository**
 ```bash
-git clone https://github.com/username/go-crud.git
-cd go-crud
+git clone https://github.com/03lukman/crud-mahasiswa-go.git
+cd crud-mahasiswa-go
 ```
 
 ### 2️⃣ **Setup Database**
@@ -68,26 +66,31 @@ CREATE TABLE students (
 ```
 
 ### 3️⃣ **Konfigurasi Database**
-Edit file `config/database.go` dan sesuaikan dengan koneksi database kamu:
+Edit file `database/database.go` dan sesuaikan dengan koneksi database kamu:
 ```go
-package config
+package database
 
 import (
-    "gorm.io/driver/mysql"
-    "gorm.io/gorm"
+	"database/sql"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
-var DB *gorm.DB
+func InitDatabase() *sql.DB {
+	dsn := "root@tcp(localhost:3306)/crud-student"
+	db, err := sql.Open("mysql", dsn)
+	if err != nil {
+		panic(err)
+	}
 
-func ConnectDatabase() {
-    dsn := "root:@tcp(127.0.0.1:3306)/go_crud_db?charset=utf8mb4&parseTime=True&loc=Local"
-    database, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-    if err != nil {
-        panic("Gagal koneksi ke database")
-    }
-    database.AutoMigrate(&models.Student{})
-    DB = database
+	err = db.Ping()
+	if err != nil {
+		panic(err)
+	}
+
+	return db
 }
+
 ```
 
 ### 4️⃣ **Jalankan Aplikasi**
@@ -114,5 +117,6 @@ Aplikasi akan berjalan di `http://localhost:8080`.
 📬 Kontak
 Jika Anda memiliki pertanyaan, silakan hubungi saya di:
 Email: lukmannurhakim3130@gmail.com
+---
 Terima kasih telah menggunakan Go CRUD! 🎉
 
