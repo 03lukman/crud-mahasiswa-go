@@ -115,8 +115,7 @@ Aplikasi akan berjalan di `http://localhost:8080`.
 ---
 
 📬 Kontak
-Jika Anda memiliki pertanyaan, silakan hubungi saya di:
-Email: lukmannurhakim3130@gmail.com
+Jika Anda memiliki pertanyaan, silakan hubungi saya di Email: lukmannurhakim3130@gmail.com
 ---
 Terima kasih telah menggunakan Go CRUD! 🎉
 
